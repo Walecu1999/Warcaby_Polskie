@@ -1,22 +1,30 @@
 import pygame
 
+# Uruchomienie programu
+pygame.init()
+
 #Pionki
 bialy= pygame.image.load("assets/bialy_pionek.png")
 czarny= pygame.image.load("assets/czarny_pionek.png")
-gracz1x = 1200
-gracz1y = 600
-gracz2x = 400
-gracz2y=350
-# Uruchomienie programu
-pygame.init()
+gracz1x = 200
+gracz1y = 200
+gracz2x = 100
+gracz2y=150
+
+#def pionek():
+
+#def damka():
+
 
 def gracz1():
     ekran.blit(bialy, (gracz1x, gracz1y))
 def gracz2():
     ekran.blit(czarny, (gracz2x, gracz2y))
 # Ekran gry
-
-ekran = pygame.display.set_mode((1800,1000))
+szerokosc=600
+wysokosc=1200
+kolor=(205,205,205)
+ekran = pygame.display.set_mode((wysokosc,szerokosc))
 
 #Tytul i ikona
 pygame.display.set_caption("Warcaby Polskie by Maciej Walczyk")
@@ -24,7 +32,7 @@ ikona = pygame.image.load("assets/ikona.png")
 pygame.display.set_icon(ikona)
 wlaczony = 1
 while wlaczony:
-    ekran.fill((205,205,205))
+    ekran.fill(kolor)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             wlaczony = 0
