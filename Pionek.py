@@ -4,3 +4,9 @@ class Pionek:
         self.wsp_y = wsp_y
         self.kolor = kolor
         self.ekran = ekran
+   # def ruchy_ziomeczkow(self):
+
+
+
+   # def zbity(self):
+
