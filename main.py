@@ -3,47 +3,73 @@ from plansza import Plansza
 # Uruchomienie programu
 pygame.init()
 
+# Ekran gry
+SZEROKOSC = 800
+WYSOKOSC = 800
+KOLOR_TLA = (10, 150, 30)
+EKRAN = pygame.display.set_mode((WYSOKOSC, SZEROKOSC))
+PLANSZOWKA = Plansza(WYSOKOSC, SZEROKOSC, EKRAN)
 #Pionki
-bialy = pygame.image.load("assets/bialy_pionek.png")
-czarny = pygame.image.load("assets/czarny_pionek.png")
-gracz1x = 200
-gracz1y = 200
-gracz2x = 100
-gracz2y=150
+BIALY = pygame.image.load("assets/bialy_pionek.png")
+CZARNY = pygame.image.load("assets/czarny_pionek.png")
+GRACZ_1X = -360
+GRACZ_1Y = 360
+GRACZ_2X = -280
+GRACZ_2Y = -360
 
 #def pionek():
 
 #def damka():
 def gracz1():
-    ekran.blit(bialy, (gracz1x, gracz1y))
+    g1_x = GRACZ_1X
+    g1_y = GRACZ_1Y
+    for i in range(0, 4):
+        for j in range(0, 10):
+            EKRAN.blit(BIALY, (g1_x, g1_y))
+            g1_x = g1_x + SZEROKOSC/5
+        if i % 2 == 0:
+            g1_x = GRACZ_1X + SZEROKOSC/10
+            g1_y = g1_y - WYSOKOSC/10
+        else:
+            g1_x = GRACZ_1X
+            g1_y = g1_y - WYSOKOSC/10
 def gracz2():
-    ekran.blit(czarny, (gracz2x, gracz2y))
-# Ekran gry
-szerokosc=800
-wysokosc=800
-kolor_tla=(10,150,30)
-ekran = pygame.display.set_mode((wysokosc,szerokosc))
-planszowka= Plansza(wysokosc,szerokosc,ekran)
+    g2_x = GRACZ_2X
+    g2_y = GRACZ_2Y
+    for i in range(0, 4):
+        for j in range(0, 10):
+            EKRAN.blit(CZARNY, (g2_x, g2_y))
+            g2_x = g2_x + SZEROKOSC/5
+        if i % 2 == 0:
+            g2_x = GRACZ_1X
+            g2_y = g2_y + WYSOKOSC/10
+        else:
+            g2_x = GRACZ_1X - SZEROKOSC/10
+            g2_y = g2_y + WYSOKOSC/10
+
+
 
 
 #Tytul i ikona
 pygame.display.set_caption("Warcaby Polskie by Maciej Walczyk")
-ikona = pygame.image.load("assets/ikona.png")
-pygame.display.set_icon(ikona)
+IKONA = pygame.image.load("assets/ikona.png")
+pygame.display.set_icon(IKONA)
 
 
-wlaczony = 1
-while wlaczony:
-    ekran.fill(kolor_tla)
+WLACZONY = 1
+while WLACZONY:
+    EKRAN.fill(KOLOR_TLA)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            wlaczony = 0
+            WLACZONY = 0
     gracz1()
     gracz2()
-    planszowka.rysuj()
+    PLANSZOWKA.rysuj()
+    gracz1()
+    gracz2()
+
     pygame.display.update()
 
 def checkboard(x):
     list = [[(j + i) % 2 for j in range(1, x + 1)] for i in range(x)]
     return list
-

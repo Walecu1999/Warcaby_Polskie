@@ -6,16 +6,16 @@ class Plansza(object):
     NOTDONE = -1
     KOLUMNY = 10
     WIERSZE = 10
-    Biale_pole = (0, 0, 0)
-    Czarne_pole = (205, 205, 205)
-    def __init__(self,wysokosc,szerokosc,ekran):
-        self.ekran=ekran
-        self.wysokosc=wysokosc
-        self.szerokosc=szerokosc
+    BIALE_POLE = (255, 255, 255)
+    CZARNE_POLE = (100, 99, 45)
+    def __init__(self, wysokosc, szerokosc, ekran):
+        self.ekran = ekran
+        self.wysokosc = wysokosc
+        self.szerokosc = szerokosc
         self.pola_bialych = []
         self.pola_czarnych = []
-        self.gracze=['C','B'];
-        self.tablica = [['-', 'C', '-', 'C', '-', 'C', '-', 'C', '-','C'],
+        self.gracze = ['C', 'B'];
+        self.tablica = [['-', 'C', '-', 'C', '-', 'C', '-', 'C', '-', 'C'],
                         ['C', '-', 'C', '-', 'C', '-', 'C', '-', 'C', '-'],
                         ['-', 'C', '-', 'C', '-', 'C', '-', 'C', '-', 'C'],
                         ['C', '-', 'C', '-', 'C', '-', 'C', '-', 'C', '-'],
@@ -44,27 +44,26 @@ class Plansza(object):
 
     def rysuj(self):
         #kolor_planszy=self.checkboard()
-        k=0
-        x, y = 0,0
-        a=0
-        for i in range(0,self.WIERSZE):
-            for j in range(0,self.KOLUMNY):
-                if (k+a)%2:
-                    k=k+1
-                    pygame.draw.rect(self.ekran,self.Czarne_pole, pygame.Rect(x,y,self.szerokosc/10,self.wysokosc/10))
+        kolor_pola = 0
+        kolor_pola2 = 0
+        wsp_x, wsp_y = 0, 0
+
+        for i in range(0, self.WIERSZE):
+            for j in range(0, self.KOLUMNY):
+                if (kolor_pola + kolor_pola2) % 2:
+                    kolor_pola = kolor_pola+1
+                    pygame.draw.rect(self.ekran, self.CZARNE_POLE, pygame.Rect(wsp_x, wsp_y, self.szerokosc / 10, self.wysokosc / 10))
                 else:
-                    k=k+1
-                    pygame.draw.rect(self.ekran,self.Biale_pole, pygame.Rect(x, y, self.szerokosc / 10, self.wysokosc / 10))
-                x+=self.szerokosc/10
-            y+=self.wysokosc/10
-            x = 0
-            a+=1
-        czcionka= pygame.font.SysFont("timesnewroman",20,bold = True)
+                    kolor_pola = kolor_pola+1
+                    pygame.draw.rect(self.ekran, self.BIALE_POLE, pygame.Rect(wsp_x, wsp_y, self.szerokosc / 10, self.wysokosc / 10))
+                wsp_x += self.szerokosc / 10
+            wsp_y += self.wysokosc/10
+            wsp_x = 0
+            kolor_pola2 += 1
+        #czcionka = pygame.font.SysFont("timesnewroman", 20, bold = True)
         #czcionka_kolor= BLACK_COLOR
 
     def draw_background(self):
         '''
         Draws background for the board
         '''
-        #font= pygame.font.SysFont("timesnewroman",20,bold = True)
-        #pygame.draw.rect(self.game.screen, LIGHT_GREY_COLOR, pygame.Rect(0, 0, self.width, self.height))
