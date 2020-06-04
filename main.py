@@ -2,7 +2,7 @@ import pygame
 from plansza import Plansza
 # Uruchomienie programu
 pygame.init()
-
+##
 # Ekran gry
 SZEROKOSC = 800
 WYSOKOSC = 800
