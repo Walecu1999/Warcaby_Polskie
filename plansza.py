@@ -1,6 +1,6 @@
 import pygame
 from Pionek import Pionek
-
+from itertools import chain
 BIALY = pygame.image.load("assets/bialy_pionek.png")
 CZARNY = pygame.image.load("assets/czarny_pionek.png")
 class Plansza(object):
@@ -16,8 +16,14 @@ class Plansza(object):
         self.szerokosc = szerokosc
         self.gracze = ['C', 'B']
         self.pola_puste =  [[Pionek(x, y, '-', self.ekran) for x in range((y + 1) % 2, 10, 2)] for y in range(4, 6)]
+        self.pola_pustych = list(chain.from_iterable(self.pola_puste))
         self.pola_czarnych = [[Pionek(x, y, 'C', self.ekran) for x in range((y + 1) % 2, 10, 2)] for y in range(4)]
         self.pola_bialych = [[Pionek(x, y, 'B', self.ekran) for x in range((y + 1) % 2, 10, 2)] for y in range(6, 10)]
+        self.wsp_puste = []
+        self.wsp_biale = []
+        self.wsp_czarne = []
+        self.lista_ruchow = []
+        self.lista_pionow_do_bicia = []
        # for i in range(4):
           #  for j in range(4):
          #       print(lista_pionkow_b[i][j].wsp_x ," ", lista_pionkow_b[i][j].wsp_y)
@@ -31,16 +37,6 @@ class Plansza(object):
                         ['B', '-', 'B', '-', 'B', '-', 'B', '-', 'B', '-'],
                         ['-', 'B', '-', 'B', '-', 'B', '-', 'B', '-', 'B'],
                         ['B', '-', 'B', '-', 'B', '-', 'B', '-', 'B', '-']]
-      #  def ruchy(pionek):
-           # ruch[]
-           # if tablica
-
-
-       # for i in range(szerokosc):
-         #   self.pola_czarnych.append((i, (i + 1) % 2))
-           # self.pola_bialych.append((i, wysokosc - (i % 2) - 1))
-        self.status = [[' ' for i in range(self.szerokosc)] for x in range(self.wysokosc)]
-        self.wygrana = self.NOTDONE
 
 
     def checkboard(x):
@@ -50,8 +46,64 @@ class Plansza(object):
         tablica = [[i for kolumna in range(self.KOLUMNY)]
                    for wiersz in range(self.WIERSZE)]
         return tablica
+    def sasiednie(self, pionek):
+        if pionek.kolor == 'B':
+            for i in self.pola_pustych:
+                if i.wsp_x == pionek.wsp_x + 1 and i.wsp_y == pionek.wsp_y - 1:
+                    self.lista_ruchow.append((pionek.wsp_x + 1, pionek.wsp_y - 1))
+                if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y -1:
+                    self.lista_ruchow.append((pionek.wsp_x - 1, pionek.wsp_y - 1))
+        if pionek.kolor == 'C':
+            for i in self.pola_pustych:
+                if i.wsp_x == pionek.wsp_x + 1 and i.wsp_y == pionek.wsp_y + 1:
+                    self.lista_ruchow.append((pionek.wsp_x + 1, pionek.wsp_y + 1))
+                if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y + 1:
+                    self.lista_ruchow.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
+    def bicie_lewo(self,pionek):
+        if pionek.kolor == 'B':
+            if pionek.wsp_x + 2 < 10 and pionek.wsp_y - 2 > 0:
+                for i in self.pola_czarnych:
+                    if i.wsp_x == pionek.wsp_x + 1 and i.wsp_y == pionek.wsp_y - 1:
+                        for j in self.pola_pustych:
+                            if j.wsp_x == pionek.wsp_x + 2 and j.wsp_y == pionek.wsp_y -2:
+                                self.lista_pionow_do_bicia.append((pionek.wsp_x + 1, pionek.wsp_y - 1))
+            if pionek.wsp_x - 2 >= 0 and pionek.wsp_y - 2 > 0:
+                for i in self.pola_czarnych:
+                    if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y - 1:
+                        for j in self.pola_pustych:
+                            if j.wsp_x == pionek.wsp_x - 2 and j.wsp_y == pionek.wsp_y -2:
+                                self.lista_pionow_do_bicia.append((pionek.wsp_x -1, pionek.wsp_y - 1))
 
-    def rysuj(self):
+        if pionek.kolor == 'C':
+            if pionek.wsp_x + 2 < self.WIERSZE and pionek.wsp_y + 2 < self.KOLUMNY:
+                for i in self.pola_bialych:
+                    try:
+                        if i.wsp_x == pionek.wsp_x + 1 and i.wsp_y == pionek.wsp_y + 1:
+                            for j in self.pola_pustych:
+                                if j.wsp_x == pionek.wsp_x + 2 and j.wsp_y == pionek.wsp_y + 2:
+                                    self.lista_pionow_do_bicia.append((pionek.wsp_x + 1, pionek.wsp_y + 1))
+                    except AttributeError:
+                        pass
+            if pionek.wsp_x - 2 >= 0 and pionek.wsp_y + 2 < self.KOLUMNY:
+                for i in self.pola_bialych:
+                    if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y + 1:
+                        for j in self.pola_pustych:
+                            if j.wsp_x == pionek.wsp_x - 2 and j.wsp_y == pionek.wsp_y + 2:
+                                self.lista_pionow_do_bicia.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
+        print("LISTA: ", self.lista_pionow_do_bicia)
+    def dodaj_bialy_pionek(self, pionek):
+        self.pola_bialych.append(Pionek(pionek.wsp_x, pionek.wsp_y, 'B', self.ekran))
+       # for i in self.pola_pustych:
+         #   if i.wsp_x == pionek.wsp_x and i.wsp_y == pionek.wsp_y:
+             #   self.pola_pustych.pop(i)
+
+       # print("Lista ruchow:  ", self.lista_ruchow)
+        #print(pionek.wsp_x)
+        #print(pionek.wsp_y)
+        #print(self.pola_pustych[6].wsp_x)
+       #print(self.pola_pustych[6].wsp_y)
+
+    def rysuj_poczatek(self):
         #kolor_planszy=self.checkboard()
         kolor_pola = 0
         kolor_pola2 = 0
@@ -63,7 +115,6 @@ class Plansza(object):
                 if (kolor_pola + kolor_pola2) % 2:
                     kolor_pola = kolor_pola+1
                     pygame.draw.rect(self.ekran, self.CZARNE_POLE, pygame.Rect(wsp_x, wsp_y, self.szerokosc / 10, self.wysokosc / 10))
-
                 else:
                     kolor_pola = kolor_pola+1
                     pygame.draw.rect(self.ekran, self.BIALE_POLE, pygame.Rect(wsp_x, wsp_y, self.szerokosc / 10, self.wysokosc / 10))
@@ -75,20 +126,40 @@ class Plansza(object):
         lista_pionkow = self.pola_bialych.copy()
         lista_pionkow.extend(self.pola_czarnych)
         lista_pionkow.extend(self.pola_puste)
+        print(self.pola_czarnych)
         for lista in lista_pionkow:
             for pionek in lista:
                 try:
                     if pionek.kolor == 'C':
                         self.ekran.blit(CZARNY, (pionek.wsp_x*wymiar_pola - 360, pionek.wsp_y*wymiar_pola - 360))
+                        self.wsp_czarne.extend(pionek.wsp_x, pionek.wsp_y)
                     elif pionek.kolor == 'B':
                         self.ekran.blit(BIALY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
+                        self.wsp_biale.extend(pionek.wsp_x, pionek.wsp_y)
+                    else:
+                        pygame.draw.rect(self.ekran, self.CZARNE_POLE,
+                                         pygame.Rect(wsp_x, wsp_y, self.szerokosc / 10, self.wysokosc / 10))
+                        self.wsp_puste.extend(pionek.wsp_x, pionek.wsp_y)
                 except Exception:
-                    print(Exception)
+                    pass
 
-
-        #czcionka = pygame.font.SysFont("timesnewroman", 20, bold = True)
+    def przesuwaj(self, pionek):
+        wymiar_pola = self.szerokosc / 10
+        if pionek.kolor == 'C':
+            self.ekran.blit(CZARNY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
+        elif pionek.kolor == 'B':
+            self.ekran.blit(BIALY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
+        else:
+            pygame.draw.rect(self.ekran, self.CZARNE_POLE,
+                             pygame.Rect(pionek.wsp_x * wymiar_pola, pionek.wsp_y*wymiar_pola, self.szerokosc / 10, self.wysokosc / 10))
+        czcionka = pygame.font.SysFont("timesnewroman", 20, bold = True)
         #czcionka_kolor= BLACK_COLOR
-
+    def zbicie_bialego_piona(self, pionek):
+        pionek.kolor = '-'
+    def ruchy(self, pionek):
+        if pionek.wsp_x + 1 and pionek.wsp_y + 1:
+            pionek.wsp_x += 1
+            pionek.wsp_y += 1
     def draw_background(self):
         '''
         Draws background for the board

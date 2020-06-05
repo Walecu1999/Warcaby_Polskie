@@ -1,4 +1,5 @@
 import pygame
+from Pionek import Pionek
 from plansza import Plansza
 # Uruchomienie programu
 pygame.init()
@@ -59,20 +60,25 @@ pygame.display.set_caption("Warcaby Polskie by Maciej Walczyk")
 IKONA = pygame.image.load("assets/ikona.png")
 pygame.display.set_icon(IKONA)
 
-
+RED= (255, 15, 10)
 WLACZONY = 1
-plansza = Plansza(WYSOKOSC_PLANSZY, SZEROKOSC_PLANSZY, EKRAN)
+EKRAN.fill(KOLOR_TLA)
+PLANSZOWKA.rysuj_poczatek()
+#WSPOLRZEDNE_PIONKOW
 while WLACZONY:
-    EKRAN.fill(KOLOR_TLA)
+    # NIE DZIALA TA FUNKCJAPLANSZOWKA.dodaj_bialy_pionek(Pionek(1, 4, 'B', EKRAN))
+    # I TA TEZ  PLANSZOWKA.bicie_lewo(PLANSZOWKA.pola_czarnych[3][0])
+    PLANSZOWKA.rysuj_poczatek()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             WLACZONY = 0
         if event.type == pygame.MOUSEBUTTONDOWN:
-            mx, my = pygame.mouse.get_pos()
-            print( mx,  my)
+            myszka = pygame.mouse.get_pos()
+                #PLANSZOWKA.przesuwaj(plansza.pola_bialych[0][0])
+
     #gracz1()
     #gracz2()
-    PLANSZOWKA.rysuj()
+    #PLANSZOWKA.rysuj()
     #gracz1()
     #gracz2()
 
