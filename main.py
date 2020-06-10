@@ -64,8 +64,9 @@ RED= (255, 15, 10)
 WLACZONY = 1
 EKRAN.fill(KOLOR_TLA)
 PLANSZOWKA.rysuj_poczatek()
-PLANSZOWKA.dodaj_bialy_pionek(Pionek(1, 4, 'B', EKRAN))
-PLANSZOWKA.rysuj_poczatek()
+PLANSZOWKA.dodaj_czarny_pionek(Pionek(3, 4, 'B', EKRAN))
+#PLANSZOWKA.rysuj_poczatek()
+PLANSZOWKA.przesuwaj(PLANSZOWKA.pola_bialych[2])
 #PLANSZOWKA.bicie_pionkiem(PLANSZOWKA.pola_bialych[0][1])
 #WSPOLRZEDNE_PIONKOW
 while WLACZONY:

@@ -15,11 +15,11 @@ class Plansza(object):
         self.wysokosc = wysokosc
         self.szerokosc = szerokosc
         self.gracze = ['C', 'B']
-        self.pola_puste =  [[Pionek(x, y, '-', self.ekran) for x in range((y + 1) % 2, 10, 2)] for y in range(0, 4)]
+        self.pola_puste =  [[Pionek(x, y, '-', self.ekran) for x in range((y + 1) % 2, 10, 2)] for y in range(4, 6)]
         self.pola_pustych = list(chain.from_iterable(self.pola_puste))
-        self.pola_czarne = [[Pionek(x, y, 'C', self.ekran) for x in range((y + 1) % 2, self.KOLUMNY, 2)] for y in range(4,5)]
+        self.pola_czarne = [[Pionek(x, y, 'C', self.ekran) for x in range((y + 1) % 2, self.KOLUMNY, 2)] for y in range(0, 4)]
         self.pola_czarnych = list(chain.from_iterable(self.pola_czarne))
-        self.pola_biale = [[Pionek(x, y, 'B', self.ekran) for x in range((y + 1) % 2, self.KOLUMNY, 2)] for y in range(5, self.WIERSZE)]
+        self.pola_biale = [[Pionek(x, y, 'B', self.ekran) for x in range((y + 1) % 2, self.KOLUMNY, 2)] for y in range(6, 10)]
         self.pola_bialych = list(chain.from_iterable(self.pola_biale))
 
         self.wsp_puste = []
@@ -62,6 +62,9 @@ class Plansza(object):
                     self.lista_ruchow.append((pionek.wsp_x + 1, pionek.wsp_y + 1))
                 if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y + 1:
                     self.lista_ruchow.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
+    def ruch(self, pionek):
+        if self.lista_ruchow
+
     def bicie_pionkiem(self,pionek):
         if pionek.kolor == 'B':
             if pionek.wsp_x + 2 < 10 and pionek.wsp_y - 2 > 0:
@@ -162,15 +165,17 @@ class Plansza(object):
 
     def przesuwaj(self, pionek):
         wymiar_pola = self.szerokosc / 10
+        pionek.wsp_x -= 1
+        pionek.wsp_y -= 1
         if pionek.kolor == 'C':
             self.ekran.blit(CZARNY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
             pygame.draw.rect(self.ekran, self.CZARNE_POLE,
-                             pygame.Rect(pionek.wsp_x * wymiar_pola, pionek.wsp_y * wymiar_pola, self.szerokosc / 10,
+                             pygame.Rect((pionek.wsp_x+1) * wymiar_pola, (pionek.wsp_y+1) * wymiar_pola, self.szerokosc / 10,
                                          self.wysokosc / 10))
         elif pionek.kolor == 'B':
-            self.ekran.blit(BIALY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
+            self.ekran.blit(BIALY, (pionek.wsp_x * wymiar_pola - 360 , pionek.wsp_y * wymiar_pola - 360 ))
             pygame.draw.rect(self.ekran, self.CZARNE_POLE,
-                             pygame.Rect(pionek.wsp_x * wymiar_pola, pionek.wsp_y*wymiar_pola, self.szerokosc / 10, self.wysokosc / 10))
+                             pygame.Rect((pionek.wsp_x+1) * wymiar_pola, (pionek.wsp_y+1)*wymiar_pola, self.szerokosc / 10, self.wysokosc / 10))
         czcionka = pygame.font.SysFont("timesnewroman", 20, bold = True)
         #czcionka_kolor= BLACK_COLOR
     def zbicie_bialego_piona(self, pionek):
