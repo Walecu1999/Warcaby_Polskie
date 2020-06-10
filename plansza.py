@@ -15,10 +15,13 @@ class Plansza(object):
         self.wysokosc = wysokosc
         self.szerokosc = szerokosc
         self.gracze = ['C', 'B']
-        self.pola_puste =  [[Pionek(x, y, '-', self.ekran) for x in range((y + 1) % 2, 10, 2)] for y in range(4, 6)]
+        self.pola_puste =  [[Pionek(x, y, '-', self.ekran) for x in range((y + 1) % 2, 10, 2)] for y in range(0, 4)]
         self.pola_pustych = list(chain.from_iterable(self.pola_puste))
-        self.pola_czarnych = [[Pionek(x, y, 'C', self.ekran) for x in range((y + 1) % 2, self.KOLUMNY, 2)] for y in range(4)]
-        self.pola_bialych = [[Pionek(x, y, 'B', self.ekran) for x in range((y + 1) % 2, self.KOLUMNY, 2)] for y in range(6, self.WIERSZE)]
+        self.pola_czarne = [[Pionek(x, y, 'C', self.ekran) for x in range((y + 1) % 2, self.KOLUMNY, 2)] for y in range(4,5)]
+        self.pola_czarnych = list(chain.from_iterable(self.pola_czarne))
+        self.pola_biale = [[Pionek(x, y, 'B', self.ekran) for x in range((y + 1) % 2, self.KOLUMNY, 2)] for y in range(5, self.WIERSZE)]
+        self.pola_bialych = list(chain.from_iterable(self.pola_biale))
+
         self.wsp_puste = []
         self.wsp_biale = []
         self.wsp_czarne = []
@@ -59,40 +62,43 @@ class Plansza(object):
                     self.lista_ruchow.append((pionek.wsp_x + 1, pionek.wsp_y + 1))
                 if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y + 1:
                     self.lista_ruchow.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
-    def bicie_lewo(self,pionek):
+    def bicie_pionkiem(self,pionek):
         if pionek.kolor == 'B':
             if pionek.wsp_x + 2 < 10 and pionek.wsp_y - 2 > 0:
-                for i in self.pola_czarnych:
-                    if i.wsp_x == pionek.wsp_x + 1 and i.wsp_y == pionek.wsp_y - 1:
+                listunia = self.pola_czarnych.copy()
+                for pioneczek in listunia:
+                    if pioneczek.wsp_x == pionek.wsp_x + 1 and pioneczek.wsp_y == pionek.wsp_y - 1:
                         for j in self.pola_pustych:
                             if j.wsp_x == pionek.wsp_x + 2 and j.wsp_y == pionek.wsp_y -2:
                                 self.lista_pionow_do_bicia.append((pionek.wsp_x + 1, pionek.wsp_y - 1))
+                                print(pionek.wsp_x, pionek.wsp_y)
+                                print("LISTA: ", self.lista_pionow_do_bicia)
             if pionek.wsp_x - 2 >= 0 and pionek.wsp_y - 2 > 0:
-                for i in self.pola_czarnych:
-                    if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y - 1:
+                listunia = self.pola_czarnych.copy()
+                for pioneczek in listunia:
+                    if pioneczek.wsp_x == pionek.wsp_x - 1 and pioneczek.wsp_y == pionek.wsp_y - 1:
                         for j in self.pola_pustych:
                             if j.wsp_x == pionek.wsp_x - 2 and j.wsp_y == pionek.wsp_y -2:
                                 self.lista_pionow_do_bicia.append((pionek.wsp_x -1, pionek.wsp_y - 1))
-
+                                print(pionek.wsp_x, pionek.wsp_y)
+                                print("LISTA: ", self.lista_pionow_do_bicia)
         if pionek.kolor == 'C':
             if pionek.wsp_x + 2 < self.WIERSZE and pionek.wsp_y + 2 < self.KOLUMNY:
                 listunia = self.pola_bialych.copy()
-                for lista in listunia:
-                    for pioneczek in lista:
-                        if pioneczek.wsp_x == pionek.wsp_x + 1 and pioneczek.wsp_y == pionek.wsp_y + 1:
-                            for j in self.pola_pustych:
-                                if j.wsp_x == pionek.wsp_x + 2 and j.wsp_y == pionek.wsp_y + 2:
-                                    self.lista_pionow_do_bicia.append((pionek.wsp_x + 1, pionek.wsp_y + 1))
-                                    print("LISTA: ", self.lista_pionow_do_bicia)
+                for pioneczek in listunia:
+                    if pioneczek.wsp_x == pionek.wsp_x + 1 and pioneczek.wsp_y == pionek.wsp_y + 1:
+                        for j in self.pola_pustych:
+                            if j.wsp_x == pionek.wsp_x + 2 and j.wsp_y == pionek.wsp_y + 2:
+                                self.lista_pionow_do_bicia.append((pionek.wsp_x + 1, pionek.wsp_y + 1))
+                                print("LISTA: ", self.lista_pionow_do_bicia)
             if pionek.wsp_x - 2 >= 0 and pionek.wsp_y + 2 < self.KOLUMNY:
                 listunia = self.pola_bialych.copy()
-                for lista in listunia:
-                    for pioneczek in lista:
-                        if pioneczek.wsp_x == pionek.wsp_x - 1 and pioneczek.wsp_y == pionek.wsp_y + 1:
-                            for j in self.pola_pustych:
-                                if j.wsp_x == pionek.wsp_x - 2 and j.wsp_y == pionek.wsp_y + 2:
-                                    self.lista_pionow_do_bicia.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
-                                    print("LISTA: ", self.lista_pionow_do_bicia)
+                for pioneczek in listunia:
+                    if pioneczek.wsp_x == pionek.wsp_x - 1 and pioneczek.wsp_y == pionek.wsp_y + 1:
+                        for j in self.pola_pustych:
+                            if j.wsp_x == pionek.wsp_x - 2 and j.wsp_y == pionek.wsp_y + 2:
+                                self.lista_pionow_do_bicia.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
+                                print("LISTA: ", self.lista_pionow_do_bicia)
 
     def dodaj_bialy_pionek(self, pionek):
         self.pola_bialych.append(Pionek(pionek.wsp_x, pionek.wsp_y, 'B', self.ekran))
@@ -139,29 +145,30 @@ class Plansza(object):
         lista_pionkow.extend(self.pola_czarnych)
         lista_pionkow.extend(self.pola_puste)
         print(self.pola_czarnych)
-        for lista in lista_pionkow:
-            for pionek in lista:
-                try:
-                    if pionek.kolor == 'C':
-                        self.ekran.blit(CZARNY, (pionek.wsp_x*wymiar_pola - 360, pionek.wsp_y*wymiar_pola - 360))
-                        self.wsp_czarne.extend(pionek.wsp_x, pionek.wsp_y)
-                    elif pionek.kolor == 'B':
-                        self.ekran.blit(BIALY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
-                        self.wsp_biale.extend(pionek.wsp_x, pionek.wsp_y)
-                    else:
-                        pygame.draw.rect(self.ekran, self.CZARNE_POLE,
+        for pionek in lista_pionkow:
+            try:
+                if pionek.kolor == 'C':
+                    self.ekran.blit(CZARNY, (pionek.wsp_x*wymiar_pola - 360, pionek.wsp_y*wymiar_pola - 360))
+                    self.wsp_czarne.extend(pionek.wsp_x, pionek.wsp_y)
+                elif pionek.kolor == 'B':
+                    self.ekran.blit(BIALY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
+                    self.wsp_biale.extend(pionek.wsp_x, pionek.wsp_y)
+                else:
+                    pygame.draw.rect(self.ekran, self.CZARNE_POLE,
                                          pygame.Rect(wsp_x, wsp_y, self.szerokosc / 10, self.wysokosc / 10))
-                        self.wsp_puste.extend(pionek.wsp_x, pionek.wsp_y)
-                except Exception:
-                    pass
+                    self.wsp_puste.extend(pionek.wsp_x, pionek.wsp_y)
+            except Exception:
+                pass
 
     def przesuwaj(self, pionek):
         wymiar_pola = self.szerokosc / 10
         if pionek.kolor == 'C':
             self.ekran.blit(CZARNY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
+            pygame.draw.rect(self.ekran, self.CZARNE_POLE,
+                             pygame.Rect(pionek.wsp_x * wymiar_pola, pionek.wsp_y * wymiar_pola, self.szerokosc / 10,
+                                         self.wysokosc / 10))
         elif pionek.kolor == 'B':
             self.ekran.blit(BIALY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
-        else:
             pygame.draw.rect(self.ekran, self.CZARNE_POLE,
                              pygame.Rect(pionek.wsp_x * wymiar_pola, pionek.wsp_y*wymiar_pola, self.szerokosc / 10, self.wysokosc / 10))
         czcionka = pygame.font.SysFont("timesnewroman", 20, bold = True)

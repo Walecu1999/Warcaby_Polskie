@@ -64,11 +64,14 @@ RED= (255, 15, 10)
 WLACZONY = 1
 EKRAN.fill(KOLOR_TLA)
 PLANSZOWKA.rysuj_poczatek()
+PLANSZOWKA.dodaj_bialy_pionek(Pionek(1, 4, 'B', EKRAN))
+PLANSZOWKA.rysuj_poczatek()
+#PLANSZOWKA.bicie_pionkiem(PLANSZOWKA.pola_bialych[0][1])
 #WSPOLRZEDNE_PIONKOW
 while WLACZONY:
-    #PLANSZOWKA.dodaj_bialy_pionek(Pionek(1, 4, 'B', EKRAN))
 
-    PLANSZOWKA.bicie_lewo(PLANSZOWKA.pola_czarnych[3][3])
+
+
     #PLANSZOWKA.rysuj_poczatek()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
