@@ -66,9 +66,10 @@ EKRAN.fill(KOLOR_TLA)
 PLANSZOWKA.rysuj_poczatek()
 #WSPOLRZEDNE_PIONKOW
 while WLACZONY:
-    # NIE DZIALA TA FUNKCJAPLANSZOWKA.dodaj_bialy_pionek(Pionek(1, 4, 'B', EKRAN))
-    # I TA TEZ  PLANSZOWKA.bicie_lewo(PLANSZOWKA.pola_czarnych[3][0])
-    PLANSZOWKA.rysuj_poczatek()
+    #PLANSZOWKA.dodaj_bialy_pionek(Pionek(1, 4, 'B', EKRAN))
+
+    PLANSZOWKA.bicie_lewo(PLANSZOWKA.pola_czarnych[3][3])
+    #PLANSZOWKA.rysuj_poczatek()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             WLACZONY = 0
