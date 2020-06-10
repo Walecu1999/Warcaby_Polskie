@@ -77,9 +77,11 @@ while WLACZONY:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             WLACZONY = 0
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             myszka = pygame.mouse.get_pos()
-                #PLANSZOWKA.przesuwaj(plansza.pola_bialych[0][0])
+            x = myszka[0]
+            y = myszka[1]
+            PLANSZOWKA.przesuwaj(PLANSZOWKA.pola_bialych[3])
 
     #gracz1()
     #gracz2()
@@ -92,3 +94,6 @@ while WLACZONY:
 def checkboard(x):
     list = [[(j + i) % 2 for j in range(1, x + 1)] for i in range(x)]
     return list
+class mousePos(object):
+    def __init__(self):
+        pygame.

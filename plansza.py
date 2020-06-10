@@ -63,7 +63,8 @@ class Plansza(object):
                 if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y + 1:
                     self.lista_ruchow.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
     def ruch(self, pionek):
-        if self.lista_ruchow
+        s=s
+#        if self.lista_ruchow
 
     def bicie_pionkiem(self,pionek):
         if pionek.kolor == 'B':
