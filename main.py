@@ -72,9 +72,6 @@ PLANSZOWKA.rysuj_poczatek()
 #PLANSZOWKA.bicie_pionkiem(PLANSZOWKA.pola_bialych[0][1])
 #WSPOLRZEDNE_PIONKOW
 while WLACZONY:
-
-
-
     #PLANSZOWKA.rysuj_poczatek()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -86,15 +83,27 @@ while WLACZONY:
             wsp_x = x // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
             wsp_y = y // (WYSOKOSC_PLANSZY // PLANSZOWKA.WIERSZE)
             if PLANSZOWKA.czy_mozna_ruszyc(GRACZ_OBECNY, wsp_x, wsp_y) == True:
-                continue
-            else:
-                pass
+                if GRACZ_OBECNY == 1:
+                    for pioneczek in PLANSZOWKA.pola_bialych:
+                        if pioneczek.wsp_x == wsp_x and pioneczek.wsp_y == wsp_y:
+                            wybrany_pionek = pioneczek
+                if GRACZ_OBECNY == 2:
+                    for pioneczek in PLANSZOWKA.pola_czarnych:
+                        if pioneczek.wsp_x == wsp_x and pioneczek.wsp_y == wsp_y:
+                            wybrany_pionek = pioneczek
             while True:
                 event = pygame.event.wait()
                 if event.type == pygame.QUIT:
                     WLACZONY = 0
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    pole_ruchu = vg
+                    pole_ruchu = pygame.mouse.get_pos()
+                    pole_x = pole_ruchu[0] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
+                    pole_y = pole_ruchu[1] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
+                    if PLANSZOWKA.czy_mozna_postawic(wybrany_pionek, pole_x, pole_y):
+                        wybrany_pionek.wsp_x = pole_x
+                        wybrany_pionek.wsp_y = pole_y
+                        PLANSZOWKA.rysuj_poczatek()
+
             print(x)
             print(y)
             print(wsp_x, " ", wsp_y)

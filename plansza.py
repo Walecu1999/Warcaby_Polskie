@@ -110,6 +110,17 @@ class Plansza(object):
                             if j.wsp_x == pionek.wsp_x - 2 and j.wsp_y == pionek.wsp_y + 2:
                                 self.lista_pionow_do_bicia.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
                                 #print("LISTA: ", self.lista_pionow_do_bicia)
+    def wybierz_pionek(self, gracz, wsp_x, wsp_y):
+        if gracz == 1:
+            for pionek in self.pola_bialych:
+                if pionek.wsp_x == wsp_x and pionek.wsp_y == wsp_y:
+                    zwroc_pionka = pionek
+        if gracz == 2:
+            for pionek in self.pola_czarnych:
+                if pionek.wsp_x == wsp_x and pionek.wsp_y == wsp_y:
+                    zwroc_pionka = pionek
+        return zwroc_pionka
+
     def czy_mozna_ruszyc(self, gracz, wsp_x, wsp_y):
         s=0
         if gracz == 1:
@@ -125,6 +136,16 @@ class Plansza(object):
                     if self.lista_ruchow != []:
                         s = 1
 
+        if s == 1:
+            return True
+        else:
+            return False
+    def czy_mozna_postawic(self, pionek, wsp_x, wsp_y):
+        s = 0
+        for x in self.lista_ruchow:
+            for y in x:
+                if self.lista_ruchow[x][0] == wsp_x and self.lista_ruchow[x][1] == wsp_y:
+                    s = 1
         if s == 1:
             return True
         else:
