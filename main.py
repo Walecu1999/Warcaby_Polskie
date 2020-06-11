@@ -61,11 +61,12 @@ IKONA = pygame.image.load("assets/ikona.png")
 pygame.display.set_icon(IKONA)
 GRACZ_BIALY = 1
 GRACZ_CZARNY = 2
-GRACZ_OBECNY = GRACZ_CZARNY
+GRACZ_OBECNY = GRACZ_BIALY
 RED= (255, 15, 10)
 WLACZONY = 1
 EKRAN.fill(KOLOR_TLA)
 PLANSZOWKA.rysuj_poczatek()
+prawda = True
 #PLANSZOWKA.dodaj_czarny_pionek(Pionek(3, 4, 'B', EKRAN))
 #PLANSZOWKA.rysuj_poczatek()
 #PLANSZOWKA.przesuwaj(PLANSZOWKA.pola_bialych[2])
@@ -87,11 +88,13 @@ while WLACZONY:
                     for pioneczek in PLANSZOWKA.pola_bialych:
                         if pioneczek.wsp_x == wsp_x and pioneczek.wsp_y == wsp_y:
                             wybrany_pionek = pioneczek
+                            prawda = True
                 if GRACZ_OBECNY == 2:
                     for pioneczek in PLANSZOWKA.pola_czarnych:
                         if pioneczek.wsp_x == wsp_x and pioneczek.wsp_y == wsp_y:
                             wybrany_pionek = pioneczek
-                while True:
+                            prawda = True
+                while prawda:
                     event = pygame.event.wait()
                     if event.type == pygame.QUIT:
                         WLACZONY = 0
@@ -105,8 +108,8 @@ while WLACZONY:
                             print("JEST OKEJ")
                             wybrany_pionek.wsp_x = pole_x
                             wybrany_pionek.wsp_y = pole_y
-                            PLANSZOWKA.rysuj(wybrany_pionek)
-
+                            PLANSZOWKA.rysuj_poczatek()
+                            prawda = False
             print(x)
             print(y)
             print(wsp_x, " ", wsp_y)
