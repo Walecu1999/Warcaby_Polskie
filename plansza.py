@@ -1,4 +1,5 @@
 import pygame
+import numpy
 from Pionek import Pionek
 from itertools import chain
 BIALY = pygame.image.load("assets/bialy_pionek.png")
@@ -27,7 +28,7 @@ class Plansza(object):
         self.wsp_puste = []
         self.wsp_biale = []
         self.wsp_czarne = []
-        self.lista_ruchow = []
+        self.lista_ruchow = [[]]
         self.lista_pionow_do_bicia = []
        # for i in range(4):
           #  for j in range(4):
@@ -53,8 +54,6 @@ class Plansza(object):
         return tablica
     def sasiednie(self, pionek):
         self.lista_ruchow.clear()
-
-
         if pionek.kolor == 'B':
             for i in self.pola_pustych:
                 if i.wsp_x == pionek.wsp_x + 1 and i.wsp_y == pionek.wsp_y - 1:
@@ -68,7 +67,8 @@ class Plansza(object):
                     self.lista_ruchow.append((pionek.wsp_x + 1, pionek.wsp_y + 1))
                 if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y + 1:
                     self.lista_ruchow.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
-        print(self.lista_ruchow[0][1])
+        print(self.lista_ruchow)
+
     def ruch(self, pionek):
         s=s
 #        if self.lista_ruchow
@@ -122,7 +122,7 @@ class Plansza(object):
         return zwroc_pionka
 
     def czy_mozna_ruszyc(self, gracz, wsp_x, wsp_y):
-        s=0
+        s = 0
         if gracz == 1:
             for pionek in self.pola_bialych:
                 if pionek.wsp_x == wsp_x and pionek.wsp_y == wsp_y:
@@ -143,8 +143,7 @@ class Plansza(object):
     def czy_mozna_postawic(self, pionek, wsp_x, wsp_y):
         s = 0
         for x in self.lista_ruchow:
-            for y in x:
-                if self.lista_ruchow[x][0] == wsp_x and self.lista_ruchow[x][1] == wsp_y:
+                if x[0] == wsp_x and x[1] == wsp_y:
                     s = 1
         if s == 1:
             return True
@@ -232,6 +231,9 @@ class Plansza(object):
         if pionek.wsp_x + 1 and pionek.wsp_y + 1:
             pionek.wsp_x += 1
             pionek.wsp_y += 1
+    def rysuj(self,pionek):
+        wymiar_pola = self.szerokosc / 10
+        self.ekran.blit(CZARNY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
     def draw_background(self):
         '''
         Draws background for the board

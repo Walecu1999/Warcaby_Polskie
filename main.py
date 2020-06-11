@@ -91,18 +91,21 @@ while WLACZONY:
                     for pioneczek in PLANSZOWKA.pola_czarnych:
                         if pioneczek.wsp_x == wsp_x and pioneczek.wsp_y == wsp_y:
                             wybrany_pionek = pioneczek
-            while True:
-                event = pygame.event.wait()
-                if event.type == pygame.QUIT:
-                    WLACZONY = 0
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    pole_ruchu = pygame.mouse.get_pos()
-                    pole_x = pole_ruchu[0] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
-                    pole_y = pole_ruchu[1] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
-                    if PLANSZOWKA.czy_mozna_postawic(wybrany_pionek, pole_x, pole_y):
-                        wybrany_pionek.wsp_x = pole_x
-                        wybrany_pionek.wsp_y = pole_y
-                        PLANSZOWKA.rysuj_poczatek()
+                while True:
+                    event = pygame.event.wait()
+                    if event.type == pygame.QUIT:
+                        WLACZONY = 0
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        pole_ruchu = pygame.mouse.get_pos()
+                        pole_x = pole_ruchu[0] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
+                        pole_y = pole_ruchu[1] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
+                        if PLANSZOWKA.czy_mozna_postawic(wybrany_pionek, pole_x, pole_y):
+                            print(wybrany_pionek.wsp_x)
+                            print(pole_x, pole_y)
+                            print("JEST OKEJ")
+                            wybrany_pionek.wsp_x = pole_x
+                            wybrany_pionek.wsp_y = pole_y
+                            PLANSZOWKA.rysuj(wybrany_pionek)
 
             print(x)
             print(y)
