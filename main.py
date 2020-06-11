@@ -72,6 +72,8 @@ prawda = True
 #PLANSZOWKA.przesuwaj(PLANSZOWKA.pola_bialych[2])
 #PLANSZOWKA.bicie_pionkiem(PLANSZOWKA.pola_bialych[0][1])
 #WSPOLRZEDNE_PIONKOW
+for y in PLANSZOWKA.pola_pustych:
+    print("Wspolrzedne puste", y.wsp_x, y.wsp_y)
 while WLACZONY:
     #PLANSZOWKA.rysuj_poczatek()
     for event in pygame.event.get():
@@ -83,6 +85,7 @@ while WLACZONY:
             y = myszka[1]
             wsp_x = x // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
             wsp_y = y // (WYSOKOSC_PLANSZY // PLANSZOWKA.WIERSZE)
+
             if PLANSZOWKA.czy_mozna_ruszyc(GRACZ_OBECNY, wsp_x, wsp_y) == True:
                 if GRACZ_OBECNY == 1:
                     for pioneczek in PLANSZOWKA.pola_bialych:
@@ -102,12 +105,22 @@ while WLACZONY:
                         pole_ruchu = pygame.mouse.get_pos()
                         pole_x = pole_ruchu[0] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
                         pole_y = pole_ruchu[1] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
-                        if PLANSZOWKA.czy_mozna_postawic(wybrany_pionek, pole_x, pole_y):
-                            print(wybrany_pionek.wsp_x)
-                            print(pole_x, pole_y)
-                            print("JEST OKEJ")
-                            wybrany_pionek.wsp_x = pole_x
-                            wybrany_pionek.wsp_y = pole_y
+                        if PLANSZOWKA.czy_mozna_bic(wybrany_pionek) == True:
+                            print("MOZNA BIC!")
+                            PLANSZOWKA.bicie_pionkiem(GRACZ_OBECNY, wybrany_pionek, pole_x, pole_y)
+                            if GRACZ_OBECNY == GRACZ_BIALY:
+                                GRACZ_OBECNY = GRACZ_CZARNY
+                            else:
+                                GRACZ_OBECNY = GRACZ_BIALY
+                            PLANSZOWKA.rysuj_poczatek()
+                            prawda = False
+                        elif PLANSZOWKA.czy_mozna_postawic(wybrany_pionek, pole_x, pole_y):
+                            PLANSZOWKA.rusz_pionkiem(wybrany_pionek, pole_x, pole_y)
+                            if GRACZ_OBECNY == GRACZ_BIALY:
+                                GRACZ_OBECNY = GRACZ_CZARNY
+                            else:
+                                GRACZ_OBECNY = GRACZ_BIALY
+                            print(GRACZ_OBECNY)
                             PLANSZOWKA.rysuj_poczatek()
                             prawda = False
             print(x)
