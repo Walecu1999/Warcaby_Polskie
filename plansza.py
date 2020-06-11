@@ -21,7 +21,9 @@ class Plansza(object):
         self.pola_czarnych = list(chain.from_iterable(self.pola_czarne))
         self.pola_biale = [[Pionek(x, y, 'B', self.ekran) for x in range((y + 1) % 2, self.KOLUMNY, 2)] for y in range(6, 10)]
         self.pola_bialych = list(chain.from_iterable(self.pola_biale))
-
+        self.wszystkie_pionki = self.pola_bialych.copy()
+        self.wszystkie_pionki.extend(self.pola_czarnych)
+        self.wszystkie_pionki.extend(self.pola_pustych)
         self.wsp_puste = []
         self.wsp_biale = []
         self.wsp_czarne = []
@@ -50,18 +52,23 @@ class Plansza(object):
                    for wiersz in range(self.WIERSZE)]
         return tablica
     def sasiednie(self, pionek):
+        self.lista_ruchow.clear()
+
+
         if pionek.kolor == 'B':
             for i in self.pola_pustych:
                 if i.wsp_x == pionek.wsp_x + 1 and i.wsp_y == pionek.wsp_y - 1:
                     self.lista_ruchow.append((pionek.wsp_x + 1, pionek.wsp_y - 1))
                 if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y -1:
                     self.lista_ruchow.append((pionek.wsp_x - 1, pionek.wsp_y - 1))
+
         if pionek.kolor == 'C':
             for i in self.pola_pustych:
                 if i.wsp_x == pionek.wsp_x + 1 and i.wsp_y == pionek.wsp_y + 1:
                     self.lista_ruchow.append((pionek.wsp_x + 1, pionek.wsp_y + 1))
                 if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y + 1:
                     self.lista_ruchow.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
+        print(self.lista_ruchow[0][1])
     def ruch(self, pionek):
         s=s
 #        if self.lista_ruchow
@@ -75,8 +82,8 @@ class Plansza(object):
                         for j in self.pola_pustych:
                             if j.wsp_x == pionek.wsp_x + 2 and j.wsp_y == pionek.wsp_y -2:
                                 self.lista_pionow_do_bicia.append((pionek.wsp_x + 1, pionek.wsp_y - 1))
-                                print(pionek.wsp_x, pionek.wsp_y)
-                                print("LISTA: ", self.lista_pionow_do_bicia)
+                               # print(pionek.wsp_x, pionek.wsp_y)
+                                #print("LISTA: ", self.lista_pionow_do_bicia)
             if pionek.wsp_x - 2 >= 0 and pionek.wsp_y - 2 > 0:
                 listunia = self.pola_czarnych.copy()
                 for pioneczek in listunia:
@@ -84,8 +91,8 @@ class Plansza(object):
                         for j in self.pola_pustych:
                             if j.wsp_x == pionek.wsp_x - 2 and j.wsp_y == pionek.wsp_y -2:
                                 self.lista_pionow_do_bicia.append((pionek.wsp_x -1, pionek.wsp_y - 1))
-                                print(pionek.wsp_x, pionek.wsp_y)
-                                print("LISTA: ", self.lista_pionow_do_bicia)
+                                #print(pionek.wsp_x, pionek.wsp_y)
+                               # print("LISTA: ", self.lista_pionow_do_bicia)
         if pionek.kolor == 'C':
             if pionek.wsp_x + 2 < self.WIERSZE and pionek.wsp_y + 2 < self.KOLUMNY:
                 listunia = self.pola_bialych.copy()
@@ -94,7 +101,7 @@ class Plansza(object):
                         for j in self.pola_pustych:
                             if j.wsp_x == pionek.wsp_x + 2 and j.wsp_y == pionek.wsp_y + 2:
                                 self.lista_pionow_do_bicia.append((pionek.wsp_x + 1, pionek.wsp_y + 1))
-                                print("LISTA: ", self.lista_pionow_do_bicia)
+                               # print("LISTA: ", self.lista_pionow_do_bicia)
             if pionek.wsp_x - 2 >= 0 and pionek.wsp_y + 2 < self.KOLUMNY:
                 listunia = self.pola_bialych.copy()
                 for pioneczek in listunia:
@@ -102,19 +109,38 @@ class Plansza(object):
                         for j in self.pola_pustych:
                             if j.wsp_x == pionek.wsp_x - 2 and j.wsp_y == pionek.wsp_y + 2:
                                 self.lista_pionow_do_bicia.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
-                                print("LISTA: ", self.lista_pionow_do_bicia)
+                                #print("LISTA: ", self.lista_pionow_do_bicia)
+    def czy_mozna_ruszyc(self, gracz, wsp_x, wsp_y):
+        s=0
+        if gracz == 1:
+            for pionek in self.pola_bialych:
+                if pionek.wsp_x == wsp_x and pionek.wsp_y == wsp_y:
+                    self.sasiednie(pionek)
+                    if self.lista_ruchow != []:
+                        s = 1
+        if gracz == 2:
+            for pionek in self.pola_czarnych:
+                if pionek.wsp_x == wsp_x and pionek.wsp_y == wsp_y:
+                    self.sasiednie(pionek)
+                    if self.lista_ruchow != []:
+                        s = 1
+
+        if s == 1:
+            return True
+        else:
+            return False
 
     def dodaj_bialy_pionek(self, pionek):
         self.pola_bialych.append(Pionek(pionek.wsp_x, pionek.wsp_y, 'B', self.ekran))
         wymiar_pola = self.szerokosc / 10
         self.ekran.blit(BIALY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
-        print(self.pola_bialych)
+        #print(self.pola_bialych)
 
     def dodaj_czarny_pionek(self, pionek):
         self.pola_czarnych.append((pionek.wsp_x, pionek.wsp_y, 'C', self.ekran))
         wymiar_pola = self.szerokosc / 10
         self.ekran.blit(CZARNY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
-        print(self.pola_bialych)
+      #  print(self.pola_bialych)
        # for i in self.pola_pustych:
          #   if i.wsp_x == pionek.wsp_x and i.wsp_y == pionek.wsp_y:
              #   self.pola_pustych.pop(i)
@@ -148,7 +174,7 @@ class Plansza(object):
         lista_pionkow = self.pola_bialych.copy()
         lista_pionkow.extend(self.pola_czarnych)
         lista_pionkow.extend(self.pola_puste)
-        print(self.pola_czarnych)
+      #  print(self.pola_czarnych)
         for pionek in lista_pionkow:
             try:
                 if pionek.kolor == 'C':

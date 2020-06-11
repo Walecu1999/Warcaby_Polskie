@@ -59,14 +59,16 @@ def gracz2():
 pygame.display.set_caption("Warcaby Polskie by Maciej Walczyk")
 IKONA = pygame.image.load("assets/ikona.png")
 pygame.display.set_icon(IKONA)
-
+GRACZ_BIALY = 1
+GRACZ_CZARNY = 2
+GRACZ_OBECNY = GRACZ_CZARNY
 RED= (255, 15, 10)
 WLACZONY = 1
 EKRAN.fill(KOLOR_TLA)
 PLANSZOWKA.rysuj_poczatek()
-PLANSZOWKA.dodaj_czarny_pionek(Pionek(3, 4, 'B', EKRAN))
+#PLANSZOWKA.dodaj_czarny_pionek(Pionek(3, 4, 'B', EKRAN))
 #PLANSZOWKA.rysuj_poczatek()
-PLANSZOWKA.przesuwaj(PLANSZOWKA.pola_bialych[2])
+#PLANSZOWKA.przesuwaj(PLANSZOWKA.pola_bialych[2])
 #PLANSZOWKA.bicie_pionkiem(PLANSZOWKA.pola_bialych[0][1])
 #WSPOLRZEDNE_PIONKOW
 while WLACZONY:
@@ -81,7 +83,22 @@ while WLACZONY:
             myszka = pygame.mouse.get_pos()
             x = myszka[0]
             y = myszka[1]
-            PLANSZOWKA.przesuwaj(PLANSZOWKA.pola_bialych[3])
+            wsp_x = x // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
+            wsp_y = y // (WYSOKOSC_PLANSZY // PLANSZOWKA.WIERSZE)
+            if PLANSZOWKA.czy_mozna_ruszyc(GRACZ_OBECNY, wsp_x, wsp_y) == True:
+                continue
+            else:
+                pass
+            while True:
+                event = pygame.event.wait()
+                if event.type == pygame.QUIT:
+                    WLACZONY = 0
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    pole_ruchu = vg
+            print(x)
+            print(y)
+            print(wsp_x, " ", wsp_y)
+            #PLANSZOWKA.przesuwaj(PLANSZOWKA.pola_bialych[3])
 
     #gracz1()
     #gracz2()
@@ -96,4 +113,4 @@ def checkboard(x):
     return list
 class mousePos(object):
     def __init__(self):
-        pygame.
+        pass
