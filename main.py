@@ -113,7 +113,7 @@ def main():
                                             if PLANSZOWKA.pola_czarnych == []:
                                                 wiadomosc("Koniec gry, wygrały Białe! Gratuluję :)", KOLOR, 4)
                                                 pygame.display.update()
-                                                time.sleep(3)
+                                                time.sleep(6)
                                                 WLACZONY = 0
                                             else:
                                                 GRACZ_OBECNY = GRACZ_CZARNY
@@ -128,7 +128,7 @@ def main():
                                                 PLANSZOWKA.rysuj_poczatek()
                                                 wiadomosc("Koniec gry, wygrały Białe! Gratuluję :)", KOLOR, 5)
                                                 pygame.display.update()
-                                                time.sleep(3)
+                                                time.sleep(6)
                                                 WLACZONY = 0
                                             else:
                                                 GRACZ_OBECNY = GRACZ_BIALY
@@ -156,7 +156,7 @@ def main():
                                             PLANSZOWKA.rysuj_poczatek()
                                             wiadomosc("Koniec gry, wygrały Białe! Gratuluję :)", KOLOR, 7)
                                             pygame.display.update()
-                                            time.sleep(3)
+                                            time.sleep(6)
                                             WLACZONY = 0
                                         else:
                                             EKRAN.fill(KOLOR_TLA)
@@ -169,7 +169,7 @@ def main():
                                         if PLANSZOWKA.pola_bialych == []:
                                             wiadomosc("Koniec gry, wygrały Czarne! Gratuluję :)", KOLOR, 7)
                                             pygame.display.update()
-                                            time.sleep(3)
+                                            time.sleep(6)
                                             WLACZONY = 0
                                         else:
                                             GRACZ_OBECNY = GRACZ_BIALY

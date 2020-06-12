@@ -107,14 +107,14 @@ class Plansza(object):
                                 self.lista_pionow_do_bicia.append((pionek.wsp_x + 1, pionek.wsp_y + 1))
                                 self.lista_miejsc_bicia.append((pionek.wsp_x + 2, pionek.wsp_y + 2))
                                # print("LISTA: ", self.lista_pionow_do_bicia)
-                if pionek.wsp_x - 2 >= 0 and pionek.wsp_y + 2 < self.KOLUMNY:
-                    listunia = self.pola_czarnych.copy()
-                    for pioneczek in listunia:
-                        if pioneczek.wsp_x == pionek.wsp_x - 1 and pioneczek.wsp_y == pionek.wsp_y + 1:
-                            for j in self.pola_pustych:
-                                if j.wsp_x == pionek.wsp_x - 2 and j.wsp_y == pionek.wsp_y + 2:
-                                    self.lista_pionow_do_bicia.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
-                                    self.lista_miejsc_bicia.append((pionek.wsp_x - 2, pionek.wsp_y + 2))
+            if pionek.wsp_x - 2 >= 0 and pionek.wsp_y + 2 < self.KOLUMNY:
+                listunia = self.pola_czarnych.copy()
+                for pioneczek in listunia:
+                    if pioneczek.wsp_x == pionek.wsp_x - 1 and pioneczek.wsp_y == pionek.wsp_y + 1:
+                        for j in self.pola_pustych:
+                            if j.wsp_x == pionek.wsp_x - 2 and j.wsp_y == pionek.wsp_y + 2:
+                                self.lista_pionow_do_bicia.append((pionek.wsp_x - 1, pionek.wsp_y + 1))
+                                self.lista_miejsc_bicia.append((pionek.wsp_x - 2, pionek.wsp_y + 2))
         if pionek.kolor == 'C':
             if pionek.wsp_x + 2 < self.WIERSZE and pionek.wsp_y + 2 < self.KOLUMNY:
                 listunia = self.pola_bialych.copy()
