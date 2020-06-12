@@ -56,14 +56,14 @@ class Plansza(object):
 
     def sasiednie(self, pionek):
         self.lista_ruchow.clear()
-        if pionek.kolor == 'B' or(pionek.kolor == 'C' and pionek.damka == True):
+        if pionek.kolor == 'B' or (pionek.kolor == 'C' and pionek.damka == True):
             for i in self.pola_pustych:
                 if i.wsp_x == pionek.wsp_x + 1 and i.wsp_y == pionek.wsp_y - 1:
                     self.lista_ruchow.append((pionek.wsp_x + 1, pionek.wsp_y - 1))
                 if i.wsp_x == pionek.wsp_x - 1 and i.wsp_y == pionek.wsp_y -1:
                     self.lista_ruchow.append((pionek.wsp_x - 1, pionek.wsp_y - 1))
 
-        if pionek.kolor == 'C' or(pionek.kolor == 'B' and pionek.damka == True):
+        if pionek.kolor == 'C' or (pionek.kolor == 'B' and pionek.damka == True):
             for i in self.pola_pustych:
                 if i.wsp_x == pionek.wsp_x + 1 and i.wsp_y == pionek.wsp_y + 1:
                     self.lista_ruchow.append((pionek.wsp_x + 1, pionek.wsp_y + 1))
