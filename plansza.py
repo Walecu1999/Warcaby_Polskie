@@ -4,6 +4,8 @@ from Pionek import Pionek
 from itertools import chain
 BIALY = pygame.image.load("assets/bialy_pionek.png")
 CZARNY = pygame.image.load("assets/czarny_pionek.png")
+CZARNA_DAMKA = pygame.image.load("assets/czarna_damka.png")
+BIALA_DAMKA = pygame.image.load("assets/biala_damka.png")
 class Plansza(object):
     CZARNY = 1
     NOTDONE = -1
@@ -329,11 +331,17 @@ class Plansza(object):
       #  print(self.pola_czarnych)
         for pionek in lista_pionkow:
             try:
-                if pionek.kolor == 'C':
+                if pionek.kolor == 'C' and pionek.damka == False:
                     self.ekran.blit(CZARNY, (pionek.wsp_x*wymiar_pola - 360, pionek.wsp_y*wymiar_pola - 360))
                     self.wsp_czarne.extend(pionek.wsp_x, pionek.wsp_y)
-                elif pionek.kolor == 'B':
+                elif pionek.kolor == 'C' and pionek.damka == True:
+                    self.ekran.blit(CZARNA_DAMKA, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
+                    self.wsp_czarne.extend(pionek.wsp_x, pionek.wsp_y)
+                elif pionek.kolor == 'B' and pionek.damka == False:
                     self.ekran.blit(BIALY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
+                    self.wsp_biale.extend(pionek.wsp_x, pionek.wsp_y)
+                elif pionek.kolor == 'B' and pionek.damka == True:
+                    self.ekran.blit(BIALA_DAMKA, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
                     self.wsp_biale.extend(pionek.wsp_x, pionek.wsp_y)
                 else:
                     pygame.draw.rect(self.ekran, self.CZARNE_POLE,
@@ -349,8 +357,13 @@ class Plansza(object):
                                      self.wysokosc / 10))
         if pionek.kolor == 'C' and pionek.damka == False:
             self.ekran.blit(CZARNY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
+        elif pionek.kolor == 'C' and pionek.damka == True:
+            self.ekran.blit(CZARNA_DAMKA, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
         elif pionek.kolor == 'B' and pionek.damka == False:
             self.ekran.blit(BIALY, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
+        elif pionek.kolor == 'B' and pionek.damka == True:
+            self.ekran.blit(BIALA_DAMKA, (pionek.wsp_x * wymiar_pola - 360, pionek.wsp_y * wymiar_pola - 360))
+        pygame.display.update()
     def przesuwaj(self, pionek):
         wymiar_pola = self.szerokosc / 10
         pionek.wsp_x -= 1

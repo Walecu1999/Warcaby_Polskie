@@ -74,6 +74,7 @@ prawda = True
 #WSPOLRZEDNE_PIONKOW
 
 while WLACZONY:
+    wybrany_pionek = None
     #PLANSZOWKA.rysuj_poczatek()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -109,36 +110,30 @@ while WLACZONY:
                         pole_ruchu = pygame.mouse.get_pos()
                         pole_x = pole_ruchu[0] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
                         pole_y = pole_ruchu[1] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
+                        ## TUTAJ BLAD
                         if PLANSZOWKA.czy_mozna_bic(wybrany_pionek) == True:
+                            temp = wybrany_pionek.wsp_x
                             print("MOZNA BIC!")
                             PLANSZOWKA.bicie_pionkiem(GRACZ_OBECNY, wybrany_pionek, pole_x, pole_y)
                             PLANSZOWKA.czy_krolowa(GRACZ_OBECNY, wybrany_pionek)
-                            PLANSZOWKA.rysuj_poczatek()
-                            if PLANSZOWKA.czy_mozna_bic(wybrany_pionek) == True:
-                                pola_ruchu = pygame.mouse.get_pos()
-                                pola_x = pola_ruchu[0] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
-                                pola_y = pola_ruchu[1] // (SZEROKOSC_PLANSZY // PLANSZOWKA.KOLUMNY)
-                                PLANSZOWKA.bicie_pionkiem(GRACZ_OBECNY, wybrany_pionek, pole_x, pole_y)
-                                PLANSZOWKA.czy_krolowa(GRACZ_OBECNY, wybrany_pionek)
-                                PLANSZOWKA.rysuj_poczatek()
-                                prawda = False
-                            else:
-                                prawda = False
-                            if GRACZ_OBECNY == GRACZ_BIALY:
-                                if PLANSZOWKA.pola_czarnych == []:
-                                    print("KONIEC GRY, WYGRALY BIALE")
-                                    WLACZONY = 0
+                            prawda = False
+                            if temp != wybrany_pionek.wsp_x:
+                                if GRACZ_OBECNY == GRACZ_BIALY:
+                                    if PLANSZOWKA.pola_czarnych == []:
+                                        print("KONIEC GRY, WYGRALY BIALE")
+                                        WLACZONY = 0
+                                    else:
+                                        GRACZ_OBECNY = GRACZ_CZARNY
                                 else:
-                                    GRACZ_OBECNY = GRACZ_CZARNY
-                            else:
-                                if PLANSZOWKA.pola_bialych == []:
-                                    print("KONIEC GRY, WYGRALY CZARNE")
-                                    WLACZONY = 0
-                                else:
-                                    GRACZ_OBECNY = GRACZ_BIALY
+                                    if PLANSZOWKA.pola_bialych == []:
+                                        print("KONIEC GRY, WYGRALY CZARNE")
+                                        WLACZONY = 0
+                                    else:
+                                        GRACZ_OBECNY = GRACZ_BIALY
 
 
                         elif PLANSZOWKA.czy_mozna_postawic(wybrany_pionek, pole_x, pole_y):
+                            prawda = False
                             PLANSZOWKA.rusz_pionkiem(wybrany_pionek, pole_x, pole_y)
                             PLANSZOWKA.czy_krolowa(GRACZ_OBECNY, wybrany_pionek)
                             if GRACZ_OBECNY == GRACZ_BIALY:
@@ -154,9 +149,10 @@ while WLACZONY:
                                 else:
                                     GRACZ_OBECNY = GRACZ_BIALY
 
-                            PLANSZOWKA.rysuj_poczatek()
-                            prawda = False
 
+
+                            prawda = False
+            PLANSZOWKA.rysuj_poczatek()
             print(x)
             print(y)
             print(wsp_x, " ", wsp_y)
