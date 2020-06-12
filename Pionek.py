@@ -1,10 +1,12 @@
 
 class Pionek:
-    def __init__(self, wsp_x, wsp_y, kolor, ekran):
+    def __init__(self, wsp_x, wsp_y, kolor, ekran, damka = False):
         self.wsp_x = wsp_x
         self.wsp_y = wsp_y
         self.kolor = kolor
         self.ekran = ekran
+        self.damka = damka
+        self.damka = False
 
     def ruchy(self):
         temp = '-'
