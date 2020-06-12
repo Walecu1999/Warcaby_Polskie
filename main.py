@@ -39,8 +39,10 @@ def main():
     #PLANSZOWKA.bicie_pionkiem(PLANSZOWKA.pola_bialych[0][1])
     #WSPOLRZEDNE_PIONKOW
     NUMER = 0
-    font = pygame.font.SysFont(None, 25)
 
+
+# WYPISYWANIE WIADOMOSCI NA EKRAN
+    font = pygame.font.SysFont(None, 25)
     def wiadomosc(tresc, kolor, liczba):
         wspol_x = 810
         wspol_y = 40 + (30 * liczba)
@@ -60,6 +62,9 @@ def main():
         wiadomosc("Teraz kolej gracza Bialych.", KOLOR, 0)
     else:
         wiadomosc2("Teraz kolej gracza Czarnych.", KOLOR)
+
+    # GLOWNA PETLA W KTOREJ TOCZY SIE GRA
+
     while WLACZONY:
         wybrany_pionek = None
     #PLANSZOWKA.rysuj_poczatek()
