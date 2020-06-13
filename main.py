@@ -131,7 +131,7 @@ def main():
                                             if PLANSZOWKA.pola_bialych == []:
                                                 EKRAN.fill(KOLOR_TLA)
                                                 PLANSZOWKA.rysuj_poczatek()
-                                                wiadomosc("Koniec gry, wygrały Białe! Gratuluję :)", KOLOR, 5)
+                                                wiadomosc("Koniec gry, wygrały Czarne! Gratuluję :)", KOLOR, 5)
                                                 pygame.display.update()
                                                 time.sleep(6)
                                                 WLACZONY = 0

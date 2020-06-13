@@ -13,19 +13,4 @@ class Pionek:
         self.damka = damka
         self.damka = False
 
-    def ruchy(self):
-        temp = '-'
-        if Pionek(wsp_x, wsp_y).kolor == 'B':
-            if Pionek(wsp_x+1, wsp_y+1).kolor == '-':
-                temp = Pionek(wsp_x+1, wsp_y+1).kolor
-                Pionek(wsp_x + 1, wsp_y + 1).kolor = 'B'
-                Pionek(wsp_x, wsp_y).kolor = temp
-    def bicia(self):
-        pass
-        # def ruchy_ziomeczkow(self):
-
-
-
-
-   # def zbity(self):
 
