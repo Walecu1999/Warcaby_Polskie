@@ -1,5 +1,4 @@
 import pygame
-import numpy
 from Pionek import Pionek
 from itertools import chain
 
