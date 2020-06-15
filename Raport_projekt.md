@@ -9,7 +9,28 @@ Założeniem projektu było stworzenie w języku Python aplikacji(czy też gry) 
 Stworzenie takiego projektu miało prowadzić do drugiego i najważniejszego założenia: Poznania i nauki języka programowania Python. W moim skromnym mniemaniu, oba te założenia zostały spełnione w zadowalającym stopniu.
 
 Linki do projektu:
-list comperhension: https://github.com/Walecu1999/Warcaby_Polskie/blob/1cf1a78552793444ab8def220e4587aff9ffaee2/plansza.py#L30
+
+list comperhension: 
+https://github.com/Walecu1999/Warcaby_Polskie/blob/1cf1a78552793444ab8def220e4587aff9ffaee2/plansza.py#L30
+https://github.com/Walecu1999/Warcaby_Polskie/blob/1cf1a78552793444ab8def220e4587aff9ffaee2/plansza.py#L32
+https://github.com/Walecu1999/Warcaby_Polskie/blob/1cf1a78552793444ab8def220e4587aff9ffaee2/plansza.py#L34
+
+klasy:
+https://github.com/Walecu1999/Warcaby_Polskie/blob/1cf1a78552793444ab8def220e4587aff9ffaee2/plansza.py#L11
+https://github.com/Walecu1999/Warcaby_Polskie/blob/34f304e5fb5fe45be3748b158a37033d6786ec3b/Pionek.py#L7
+
+Wyjątki:
+https://github.com/Walecu1999/Warcaby_Polskie/blob/1cf1a78552793444ab8def220e4587aff9ffaee2/plansza.py#L360
+
+Main:
+https://github.com/Walecu1999/Warcaby_Polskie/blob/34f304e5fb5fe45be3748b158a37033d6786ec3b/main.py#L5
+
+Główna pętla:
+https://github.com/Walecu1999/Warcaby_Polskie/blob/34f304e5fb5fe45be3748b158a37033d6786ec3b/main.py#L68
+
+Parę testów:
+https://github.com/Walecu1999/Warcaby_Polskie/blob/34f304e5fb5fe45be3748b158a37033d6786ec3b/main.py#L35
+
 
 Realizacja projektu:
 
